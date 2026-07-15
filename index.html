@@ -423,7 +423,7 @@ async function doLogin() {
   btn.querySelector('#login-btn-text').style.alignItems = 'center';
   try {
     const res = await callApi('login', { username: user, password: pass });
-    SESSION = { token: res.token, name: res.name, rowStart: res.rowStart, rowEnd: res.rowEnd };
+    SESSION = { token: res.token, username: res.username, name: res.name, rowStart: res.rowStart, rowEnd: res.rowEnd };
     sessionStorage.setItem('bpn_intern_session', JSON.stringify(SESSION));
     enterApp();
   } catch (e) {
@@ -497,8 +497,11 @@ function switchTab(tab) {
 function currentTabData() {
   let data = SUBMISSIONS;
   if (ACTIVE_TAB === 'mine' && SESSION) {
-    const me = (SESSION.name || '').trim().toLowerCase();
-    data = data.filter(s => (s.internName || '').trim().toLowerCase() === me);
+    const names = [
+      (SESSION.username||'').trim().toLowerCase(),
+      (SESSION.name||'').trim().toLowerCase()
+    ].filter(Boolean);
+    data = data.filter(s => names.includes((s.internName||'').trim().toLowerCase()));
   }
   if (SEARCH_TERM) {
     const q = SEARCH_TERM.toLowerCase();
@@ -550,8 +553,11 @@ function spinRefreshIcons(on) {
 }
 
 function updateTabCounts() {
-  const me = (SESSION && SESSION.name || '').trim().toLowerCase();
-  const mine = SUBMISSIONS.filter(s => (s.internName||'').trim().toLowerCase() === me).length;
+  const names=[
+    ((SESSION&&SESSION.username)||'').trim().toLowerCase(),
+    ((SESSION&&SESSION.name)||'').trim().toLowerCase()
+  ].filter(Boolean);
+  const mine=SUBMISSIONS.filter(s=>names.includes((s.internName||'').trim().toLowerCase())).length;
   document.getElementById('tab-count-assign').textContent = SUBMISSIONS.length;
   document.getElementById('tab-count-mine').textContent = mine;
 }
