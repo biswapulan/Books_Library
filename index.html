@@ -237,6 +237,9 @@
   @media (min-width:861px){
     .sidebar{ transform:none !important; }
   }
+
+#assignOverlay{position:fixed;inset:0;background:rgba(255,255,255,.85);display:none;align-items:center;justify-content:center;z-index:9999;flex-direction:column;font-family:inherit}
+.loader{width:54px;height:54px;border:6px solid #dbeafe;border-top-color:#2563eb;border-radius:50%;animation:spin .8s linear infinite}
 </style>
 </head>
 <body>
@@ -359,7 +362,7 @@
   </div>
 </div>
 
-<div id="toast-wrap"></div>
+<div id="assignOverlay"><div class="loader"></div><div id="assignMsg" style="margin-top:16px;font-weight:700">Preparing...</div></div><div id="toast-wrap"></div>
 
 <script>
 /* Standalone — no dependency on the main site repo. Same URL as js/sheets.js's APPS_SCRIPT_URL. */
@@ -378,7 +381,7 @@ const BRANCHES = [
 const PAGE_SIZE = 8;
 
 let SESSION = null; // { token, name, rowStart, rowEnd }
-let SUBMISSIONS = [];
+let ASSIGN_ROWS = [];\nlet MY_ROWS = [];
 let ACTIVE_TAB = 'assign'; // 'assign' | 'mine'
 let SEARCH_TERM = '';
 let VISIBLE_COUNT = PAGE_SIZE;
@@ -495,7 +498,7 @@ function switchTab(tab) {
 }
 
 function currentTabData() {
-  let data = SUBMISSIONS;
+  let data = ACTIVE_TAB==='assign'?ASSIGN_ROWS:MY_ROWS;
   if (ACTIVE_TAB === 'mine' && SESSION) {
     const names = [
       (SESSION.username||'').trim().toLowerCase(),
@@ -527,7 +530,8 @@ async function loadSubmissions() {
   spinRefreshIcons(true);
   try {
     const res = await callApi('getSubmissions', { token: SESSION.token });
-    SUBMISSIONS = res.rows;
+    ASSIGN_ROWS = res.assignRows||[];
+    MY_ROWS = res.myRows||[];
     VISIBLE_COUNT = PAGE_SIZE;
     updateTabCounts();
     renderList();
@@ -537,7 +541,7 @@ async function loadSubmissions() {
       doLogout();
       return;
     }
-    showToast(e.message, 'error');
+    document.getElementById('assignOverlay').style.display='none';clearInterval(mt);showToast(e.message, 'error');
     document.getElementById('list').innerHTML = `<div class="empty-state">${warnIconBig()}<p>Could not load submissions</p></div>`;
     document.getElementById('count-pill').textContent = 'Error';
   } finally {
@@ -711,10 +715,10 @@ async function submitAssign(rowIndex) {
   if (branchVal.startsWith('group:')) payload.group = branchVal.split(':')[1];
   else payload.branch = branchVal.split(':')[1];
 
-  btn.disabled = true; btnText.innerHTML = '<span class="spinner dark" style="border-color:rgba(255,255,255,0.35); border-top-color:#fff;"></span> Saving';
+  document.getElementById('assignOverlay').style.display='flex';const msgs=['Preparing book...','Copying to Drive...','Updating database...'];let mi=0;document.getElementById('assignMsg').textContent=msgs[0];let mt=setInterval(()=>{mi=(mi+1)%msgs.length;document.getElementById('assignMsg').textContent=msgs[mi];},900);btn.disabled=true; btnText.innerHTML='<span class="spinner dark" style="border-color:rgba(255,255,255,0.35); border-top-color:#fff;"></span> Saving';
   try {
     const res = await callApi('assignBook', payload);
-    showToast(`Added to ${res.branchesAssigned.length} branch(es): ${res.branchesAssigned.join(', ')}`, 'success');
+    clearInterval(mt);document.getElementById('assignMsg').textContent='Finished!';setTimeout(()=>document.getElementById('assignOverlay').style.display='none',500);showToast(`Added to ${res.branchesAssigned.length} branch(es): ${res.branchesAssigned.join(', ')}`, 'success');
     if (res.driveWarning) showToast(res.driveWarning, 'error');
     SUBMISSIONS = SUBMISSIONS.filter(s => s.rowIndex !== rowIndex);
     updateTabCounts();
