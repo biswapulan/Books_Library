@@ -3,18 +3,19 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-<title>Books Panel — BPUTNotes.in</title>
+<title>Books Panel - BPUTNotes.in</title>
 <meta name="robots" content="noindex,nofollow" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root{
-    --blue:#2563eb; --blue-dark:#1e4fa0; --blue-light:#eff4ff; --amber:#f59e0b;
-    --bg:#f6f8fb; --card:#ffffff; --border:#e4e9f1;
-    --text:#0f172a; --text-dim:#4b5871; --text-mute:#93a0b4;
-    --green:#16a34a; --green-bg:#eef9f1; --red:#dc2626; --red-bg:#fdeeee;
-    --sidebar-w:252px; --radius:14px; --radius-sm:9px;
+    --blue:#1d4ed8; --blue-dark:#1739a3; --blue-light:#eef2ff;
+    --ink:#0b1220; --slate:#334155; --amber:#b45309;
+    --bg:#f4f6f9; --card:#ffffff; --border:#e2e6ee; --border-soft:#edf0f5;
+    --text:#0f172a; --text-dim:#516075; --text-mute:#8a93a6;
+    --green:#15803d; --green-bg:#eef8f1; --red:#b91c1c; --red-bg:#fdeeee;
+    --sidebar-w:260px; --radius:12px; --radius-sm:8px;
     --font-display:'Sora', system-ui, sans-serif;
     --font-body:'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   }
@@ -23,64 +24,63 @@
   body{
     margin:0; font-family:var(--font-body);
     background:var(--bg); color:var(--text); -webkit-font-smoothing:antialiased;
+    letter-spacing:0.005em;
   }
-  ::selection{ background:rgba(37,99,235,0.18); }
-  button{ font-family:inherit; cursor:pointer; border:none; border-radius:var(--radius-sm); font-weight:700; }
+  ::selection{ background:rgba(29,78,216,0.14); }
+  button{ font-family:inherit; cursor:pointer; border:none; border-radius:var(--radius-sm); font-weight:600; }
   input, select{
-    width:100%; padding:11px 12px; border:1px solid var(--border); border-radius:var(--radius-sm);
-    font-size:0.95rem; background:#fff; color:var(--text); font-family:inherit;
+    width:100%; padding:10px 12px; border:1px solid var(--border); border-radius:var(--radius-sm);
+    font-size:0.92rem; background:#fff; color:var(--text); font-family:inherit;
   }
-  input:focus, select:focus{ outline:2px solid var(--blue); outline-offset:1px; }
-  label{ display:block; font-size:0.76rem; font-weight:600; color:var(--text-dim); margin:14px 0 6px; letter-spacing:.01em; }
+  input:focus, select:focus{ outline:none; border-color:var(--blue); box-shadow:0 0 0 3px rgba(29,78,216,0.10); }
+  label{ display:block; font-size:0.72rem; font-weight:600; color:var(--text-dim); margin:13px 0 6px; letter-spacing:0.03em; text-transform:uppercase; }
 
-  /* ── shared brand mark ── */
+  /* shared brand mark */
   .brandmark{ display:flex; align-items:center; gap:10px; }
-  .brandmark svg{ flex-shrink:0; width:38px; height:38px; border-radius:10px; box-shadow:0 3px 10px rgba(37,99,235,0.25); }
+  .brandmark svg{ flex-shrink:0; width:36px; height:36px; border-radius:9px; }
   .brandmark .btxt{ line-height:1.15; }
-  .brandmark .bname{ font-family:var(--font-display); font-weight:800; font-size:1rem; letter-spacing:-.01em; }
-  .brandmark .bsub{ font-size:0.7rem; color:var(--text-mute); font-weight:600; letter-spacing:.02em; text-transform:uppercase; }
+  .brandmark .bname{ font-family:var(--font-display); font-weight:700; font-size:0.98rem; letter-spacing:-0.01em; color:var(--ink); }
+  .brandmark .bsub{ font-size:0.66rem; color:var(--text-mute); font-weight:600; letter-spacing:0.05em; text-transform:uppercase; }
 
-  /* ═══════════ LOGIN ═══════════ */
+  /* ================ LOGIN ================ */
   #login-screen{
     min-height:100vh; display:flex; align-items:center; justify-content:center; padding:24px;
-    background:
-      radial-gradient(600px circle at 15% -5%, rgba(37,99,235,0.10), transparent 60%),
-      radial-gradient(500px circle at 100% 100%, rgba(245,158,11,0.08), transparent 55%),
-      var(--bg);
+    background:var(--bg);
   }
   .login-card{
-    background:var(--card); border:1px solid var(--border); border-radius:20px;
-    padding:32px 26px; width:100%; max-width:380px; box-shadow:0 14px 40px rgba(15,23,42,0.08);
+    background:var(--card); border:1px solid var(--border); border-radius:16px;
+    padding:34px 30px; width:100%; max-width:380px; box-shadow:0 1px 2px rgba(15,23,42,0.04), 0 12px 32px rgba(15,23,42,0.06);
   }
-  .login-card .brandmark{ margin-bottom:22px; }
-  .login-card .brandmark svg{ width:46px; height:46px; }
-  .login-card .brandmark .bname{ font-size:1.15rem; }
-  .login-card h1{ font-family:var(--font-display); font-size:1.2rem; font-weight:700; margin:0 0 4px; }
-  .login-card p{ font-size:0.85rem; color:var(--text-mute); margin:0 0 4px; line-height:1.5; }
+  .login-card .brandmark{ margin-bottom:26px; }
+  .login-card .brandmark svg{ width:42px; height:42px; }
+  .login-card .brandmark .bname{ font-size:1.08rem; }
+  .login-card h1{ font-family:var(--font-display); font-size:1.15rem; font-weight:700; margin:0 0 5px; color:var(--ink); }
+  .login-card p{ font-size:0.84rem; color:var(--text-mute); margin:0 0 4px; line-height:1.5; }
   .btn-primary{
-    width:100%; background:var(--blue); color:#fff; padding:12px; font-size:0.95rem; margin-top:20px;
+    width:100%; background:var(--blue); color:#fff; padding:11px; font-size:0.92rem; margin-top:22px;
     display:flex; align-items:center; justify-content:center; gap:9px; transition:background .15s;
+    letter-spacing:0.01em;
   }
   .btn-primary:hover:not(:disabled){ background:var(--blue-dark); }
-  .btn-primary:disabled{ opacity:0.75; cursor:default; }
+  .btn-primary:disabled{ opacity:0.7; cursor:default; }
   .err-msg{
-    background:var(--red-bg); color:var(--red); border:1px solid rgba(220,38,38,0.18);
-    border-radius:var(--radius-sm); padding:10px 12px; font-size:0.82rem; margin-top:14px; display:none;
+    background:var(--red-bg); color:var(--red); border:1px solid rgba(185,28,28,0.16);
+    border-radius:var(--radius-sm); padding:10px 12px; font-size:0.8rem; margin-top:14px; display:none;
     align-items:center; gap:8px;
   }
 
-  /* ── spinner / loader primitives ── */
+  /* spinner / loader primitives */
   .spinner{
-    width:16px; height:16px; border-radius:50%;
+    width:15px; height:15px; border-radius:50%;
     border:2px solid rgba(255,255,255,0.35); border-top-color:#fff;
     animation:spin .7s linear infinite; flex-shrink:0;
   }
-  .spinner.dark{ border:2px solid rgba(37,99,235,0.2); border-top-color:var(--blue); }
+  .spinner.dark{ border:2px solid rgba(29,78,216,0.18); border-top-color:var(--blue); }
   @keyframes spin{ to{ transform:rotate(360deg); } }
 
-  /* book-page loader: signature element for content loading */
+  /* book-page loader, signature element for content loading */
   .book-loader{ display:flex; flex-direction:column; align-items:center; justify-content:center; padding:56px 20px; gap:14px; }
-  .book-loader .pages{ position:relative; width:46px; height:36px; }
+  .book-loader .pages{ position:relative; width:44px; height:34px; }
   .book-loader .pages span{
     position:absolute; inset:0; background:var(--card); border:2px solid var(--blue);
     border-radius:4px 8px 8px 4px; transform-origin:left center;
@@ -94,17 +94,9 @@
     50%{ transform:rotateY(-140deg); opacity:.55; }
     100%{ transform:rotateY(0deg); opacity:1; }
   }
-  .book-loader .ltext{ font-size:0.8rem; color:var(--text-mute); font-weight:600; }
+  .book-loader .ltext{ font-size:0.78rem; color:var(--text-mute); font-weight:500; }
 
-  /* skeleton cards */
-  .skel-card{ background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:16px; margin-bottom:12px; }
-  .skel-line{ height:12px; border-radius:6px; background:linear-gradient(90deg,#eef1f6 25%,#f7f9fc 37%,#eef1f6 63%); background-size:400% 100%; animation:shimmer 1.3s ease infinite; }
-  @keyframes shimmer{ 0%{ background-position:100% 0; } 100%{ background-position:0 0; } }
-  .skel-card .skel-line.w60{ width:60%; margin-bottom:10px; }
-  .skel-card .skel-line.w40{ width:40%; margin-bottom:8px; height:10px; }
-  .skel-card .skel-line.w30{ width:30%; height:10px; }
-
-  /* ═══════════ APP SHELL ═══════════ */
+  /* ================ APP SHELL ================ */
   #app{ display:none; min-height:100vh; }
   .shell{ display:flex; min-height:100vh; }
 
@@ -113,32 +105,31 @@
     width:var(--sidebar-w); flex-shrink:0; background:var(--card); border-right:1px solid var(--border);
     display:flex; flex-direction:column; position:sticky; top:0; height:100vh;
   }
-  .sidebar-head{ padding:20px 18px 16px; border-bottom:1px solid var(--border); }
-  .sidebar-head .brandmark .bname{ font-size:1rem; }
-  .sidebar-panel-tag{ margin-top:12px; font-size:0.7rem; font-weight:700; color:var(--blue); background:var(--blue-light); display:inline-block; padding:4px 10px; border-radius:100px; letter-spacing:.02em; }
-  .sidebar-nav{ padding:14px 12px; display:flex; flex-direction:column; gap:4px; flex:1; }
+  .sidebar-head{ padding:20px 20px 16px; border-bottom:1px solid var(--border); }
+  .sidebar-head .brandmark .bname{ font-size:0.98rem; }
+  .sidebar-panel-tag{ margin-top:13px; font-size:0.68rem; font-weight:600; color:var(--blue); background:var(--blue-light); display:inline-block; padding:4px 10px; border-radius:5px; letter-spacing:0.03em; text-transform:uppercase; }
+  .sidebar-nav{ padding:14px 12px; display:flex; flex-direction:column; gap:2px; flex:1; }
   .nav-btn{
     display:flex; align-items:center; gap:10px; text-align:left; background:transparent; color:var(--text-dim);
-    padding:11px 12px; border-radius:var(--radius-sm); font-size:0.88rem; font-weight:600; width:100%;
+    padding:10px 12px; border-radius:var(--radius-sm); font-size:0.86rem; font-weight:500; width:100%;
     transition:background .12s, color .12s;
   }
-  .nav-btn svg{ flex-shrink:0; opacity:.8; }
+  .nav-btn svg{ flex-shrink:0; opacity:.75; }
   .nav-btn:hover{ background:var(--bg); }
-  .nav-btn.active{ background:var(--blue-light); color:var(--blue); }
+  .nav-btn.active{ background:var(--blue-light); color:var(--blue); font-weight:600; }
   .nav-btn.active svg{ opacity:1; }
-  .nav-btn .nbadge{ margin-left:auto; font-size:0.68rem; font-weight:700; background:var(--border); color:var(--text-dim); padding:2px 7px; border-radius:100px; }
+  .nav-btn .nbadge{ margin-left:auto; font-size:0.66rem; font-weight:700; background:var(--border); color:var(--text-dim); padding:2px 7px; border-radius:5px; }
   .nav-btn.active .nbadge{ background:var(--blue); color:#fff; }
 
-  .sidebar-foot{ padding:14px 18px 18px; border-top:1px solid var(--border); }
-  .foot-user{ display:flex; align-items:center; gap:10px; margin-bottom:10px; }
-  .foot-avatar{ width:32px; height:32px; border-radius:50%; background:var(--blue-light); color:var(--blue); display:flex; align-items:center; justify-content:center; font-weight:700; font-size:0.85rem; flex-shrink:0; }
-  .foot-name{ font-size:0.85rem; font-weight:700; line-height:1.2; }
+  .sidebar-foot{ padding:14px 20px 18px; border-top:1px solid var(--border); }
+  .foot-user{ display:flex; align-items:center; gap:10px; margin-bottom:11px; }
+  .foot-avatar{ width:30px; height:30px; border-radius:7px; background:var(--blue-light); color:var(--blue); display:flex; align-items:center; justify-content:center; font-weight:700; font-size:0.8rem; flex-shrink:0; }
+  .foot-name{ font-size:0.83rem; font-weight:600; line-height:1.2; color:var(--ink); }
   .foot-range{ font-size:0.7rem; color:var(--text-mute); }
-  .foot-clock{ font-size:0.72rem; color:var(--text-mute); font-variant-numeric:tabular-nums; margin-bottom:10px; display:flex; align-items:center; gap:6px; }
-  .foot-clock .dot{ width:6px; height:6px; border-radius:50%; background:var(--green); flex-shrink:0; animation:pulse 2s ease infinite; }
-  @keyframes pulse{ 0%,100%{ opacity:1; } 50%{ opacity:.35; } }
-  .btn-logout{ width:100%; background:var(--bg); color:var(--text-dim); border:1px solid var(--border); padding:9px; font-size:0.78rem; display:flex; align-items:center; justify-content:center; gap:7px; }
-  .btn-logout:hover{ background:var(--red-bg); color:var(--red); border-color:rgba(220,38,38,0.2); }
+  .foot-clock{ font-size:0.7rem; color:var(--text-mute); font-variant-numeric:tabular-nums; margin-bottom:11px; display:flex; align-items:center; gap:6px; }
+  .foot-clock .dot{ width:5px; height:5px; border-radius:50%; background:var(--green); flex-shrink:0; }
+  .btn-logout{ width:100%; background:var(--bg); color:var(--text-dim); border:1px solid var(--border); padding:9px; font-size:0.78rem; display:flex; align-items:center; justify-content:center; gap:7px; font-weight:500; }
+  .btn-logout:hover{ background:var(--red-bg); color:var(--red); border-color:rgba(185,28,28,0.18); }
 
   /* mobile topbar + drawer overlay */
   .mobile-topbar{ display:none; }
@@ -147,77 +138,78 @@
   /* main column */
   .main{ flex:1; min-width:0; }
   .main-header{
-    position:sticky; top:0; background:rgba(246,248,251,0.9); backdrop-filter:blur(8px);
-    border-bottom:1px solid var(--border); padding:16px 24px; z-index:5;
+    position:sticky; top:0; background:rgba(244,246,249,0.92); backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--border); padding:18px 28px; z-index:5;
   }
-  .main-header h2{ font-family:var(--font-display); font-size:1.15rem; font-weight:700; margin:0 0 2px; }
+  .main-header h2{ font-family:var(--font-display); font-size:1.12rem; font-weight:700; margin:0 0 2px; color:var(--ink); }
   .main-header .sub{ font-size:0.8rem; color:var(--text-mute); }
-  .wrap{ max-width:760px; margin:0 auto; padding:18px 24px 90px; }
+  .wrap{ max-width:760px; margin:0 auto; padding:20px 28px 90px; }
 
-  .toolbar{ display:flex; gap:10px; align-items:center; margin-bottom:14px; flex-wrap:wrap; }
+  .toolbar{ display:flex; gap:10px; align-items:center; margin-bottom:16px; flex-wrap:wrap; }
   .search-wrap{ position:relative; flex:1; min-width:180px; }
-  .search-wrap svg{ position:absolute; left:11px; top:50%; transform:translateY(-50%); opacity:.45; }
+  .search-wrap svg{ position:absolute; left:11px; top:50%; transform:translateY(-50%); opacity:.4; }
   .search-wrap input{ padding-left:34px; }
-  .count-pill{ font-size:0.76rem; font-weight:600; color:var(--text-dim); background:var(--card); border:1px solid var(--border); padding:6px 12px; border-radius:100px; white-space:nowrap; display:flex; align-items:center; gap:6px; }
-  .btn-refresh{ background:var(--card); border:1px solid var(--border); color:var(--text-dim); padding:9px 12px; font-size:0.78rem; display:flex; align-items:center; gap:6px; }
-  .btn-refresh:hover{ background:var(--bg); }
+  .count-pill{ font-size:0.74rem; font-weight:600; color:var(--text-dim); background:var(--card); border:1px solid var(--border); padding:7px 12px; border-radius:var(--radius-sm); white-space:nowrap; display:flex; align-items:center; gap:6px; }
+  .btn-refresh{ background:var(--card); border:1px solid var(--border); color:var(--text-dim); padding:9px 13px; font-size:0.78rem; display:flex; align-items:center; gap:6px; font-weight:500; }
+  .btn-refresh:hover{ background:var(--bg); border-color:#d3d9e3; }
   .btn-refresh svg.spin{ animation:spin .7s linear infinite; }
 
-  /* ── submission cards ── */
-  .card{ background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:16px; margin-bottom:12px; transition:box-shadow .15s; }
-  .card:hover{ box-shadow:0 4px 14px rgba(15,23,42,0.05); }
-  .card-top{ display:flex; justify-content:space-between; gap:10px; margin-bottom:6px; }
-  .book-title{ font-weight:700; font-size:0.96rem; line-height:1.35; }
-  .badge{ font-size:0.66rem; font-weight:700; padding:3px 9px; border-radius:100px; white-space:nowrap; background:var(--blue-light); color:var(--blue); height:fit-content; }
+  /* submission cards */
+  .card{ background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:17px 18px; margin-bottom:11px; transition:border-color .15s; }
+  .card:hover{ border-color:#d3d9e3; }
+  .card-top{ display:flex; justify-content:space-between; gap:10px; margin-bottom:6px; align-items:flex-start; }
+  .book-title{ font-weight:600; font-size:0.94rem; line-height:1.4; color:var(--ink); }
+  .badge{ font-size:0.65rem; font-weight:600; padding:3px 8px; border-radius:5px; white-space:nowrap; background:var(--bg); color:var(--text-dim); border:1px solid var(--border); height:fit-content; }
   .meta{ font-size:0.79rem; color:var(--text-dim); margin:3px 0; }
-  .meta b{ color:var(--text); }
-  .dot-sep{ color:var(--text-mute); margin:0 5px; }
-  .note-line{ font-size:0.79rem; color:var(--text-mute); margin-top:6px; font-style:italic; border-left:2px solid var(--border); padding-left:8px; }
-  .card a.link-btn{ display:inline-flex; align-items:center; gap:5px; margin-top:9px; font-size:0.79rem; color:var(--blue); text-decoration:none; font-weight:600; }
+  .meta b{ color:var(--text); font-weight:600; }
+  .dot-sep{ color:var(--text-mute); margin:0 6px; }
+  .note-line{ font-size:0.79rem; color:var(--text-mute); margin-top:7px; font-style:italic; border-left:2px solid var(--border); padding-left:9px; }
+  .card a.link-btn{ display:inline-flex; align-items:center; gap:5px; margin-top:10px; font-size:0.79rem; color:var(--blue); text-decoration:none; font-weight:600; }
   .card a.link-btn:hover{ text-decoration:underline; }
 
-  details{ margin-top:11px; }
+  details{ margin-top:12px; }
   summary{
-    list-style:none; cursor:pointer; font-size:0.83rem; font-weight:700; color:var(--blue);
-    padding:10px 0; border-top:1px dashed var(--border); display:flex; align-items:center; gap:7px;
+    list-style:none; cursor:pointer; font-size:0.81rem; font-weight:600; color:var(--blue);
+    padding:11px 0; border-top:1px solid var(--border-soft); display:flex; align-items:center; gap:7px;
   }
   summary::-webkit-details-marker{ display:none; }
   summary .chev{ transition:transform .18s; }
   details[open] summary .chev{ transform:rotate(90deg); }
 
-  .form-grid{ display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:6px; }
+  .form-grid{ display:grid; grid-template-columns:1fr 1fr; gap:11px; margin-top:6px; }
   .form-grid .full{ grid-column:1/-1; }
-  .form-hint{ font-size:0.7rem; color:var(--text-mute); margin-top:4px; }
+  .form-hint{ font-size:0.7rem; color:var(--text-mute); margin-top:5px; }
   .btn-assign{
-    width:100%; background:var(--green); color:#fff; padding:12px; font-size:0.88rem; margin-top:15px;
+    width:100%; background:var(--green); color:#fff; padding:11px; font-size:0.86rem; margin-top:16px;
     display:flex; align-items:center; justify-content:center; gap:8px; transition:background .15s;
+    letter-spacing:0.01em;
   }
-  .btn-assign:hover:not(:disabled){ background:#12703a; }
+  .btn-assign:hover:not(:disabled){ background:#106934; }
   .btn-assign:disabled{ opacity:0.7; }
 
-  .empty-state{ text-align:center; padding:60px 20px; color:var(--text-mute); }
-  .empty-state svg{ opacity:.35; margin-bottom:10px; }
-  .empty-state p{ font-size:0.88rem; margin:0; }
+  .empty-state{ text-align:center; padding:64px 20px; color:var(--text-mute); }
+  .empty-state svg{ opacity:.3; margin-bottom:12px; }
+  .empty-state p{ font-size:0.86rem; margin:0; }
 
-  .btn-loadmore{ width:100%; background:var(--card); border:1px solid var(--border); color:var(--text-dim); padding:12px; font-size:0.84rem; margin-top:4px; }
+  .btn-loadmore{ width:100%; background:var(--card); border:1px solid var(--border); color:var(--text-dim); padding:12px; font-size:0.83rem; margin-top:4px; font-weight:500; }
   .btn-loadmore:hover{ background:var(--bg); border-color:var(--blue); color:var(--blue); }
 
-  /* ── toasts ── */
-  #toast-wrap{ position:fixed; bottom:18px; left:0; right:0; display:flex; flex-direction:column; align-items:center; gap:8px; z-index:100; pointer-events:none; padding:0 16px; }
+  /* toasts */
+  #toast-wrap{ position:fixed; bottom:20px; left:0; right:0; display:flex; flex-direction:column; align-items:center; gap:8px; z-index:100; pointer-events:none; padding:0 16px; }
   .toast{
-    display:flex; align-items:center; gap:9px; background:var(--text); color:#fff; padding:11px 16px; border-radius:10px; font-size:0.82rem;
-    max-width:420px; width:100%; box-shadow:0 8px 24px rgba(0,0,0,0.18); animation:fadein .2s ease;
+    display:flex; align-items:center; gap:9px; background:var(--ink); color:#fff; padding:11px 16px; border-radius:9px; font-size:0.81rem;
+    max-width:420px; width:100%; box-shadow:0 8px 24px rgba(0,0,0,0.16); animation:fadein .2s ease;
   }
-  .toast.success{ background:#14532d; }
-  .toast.error{ background:#7f1d1d; }
+  .toast.success{ background:#0f4a26; }
+  .toast.error{ background:#5c1414; }
   .toast svg{ flex-shrink:0; }
-  @keyframes fadein{ from{opacity:0; transform:translateY(8px);} to{opacity:1; transform:translateY(0);} }
+  @keyframes fadein{ from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:translateY(0);} }
 
-  /* ═══════════ RESPONSIVE ═══════════ */
+  /* ================ RESPONSIVE ================ */
   @media (max-width:860px){
-    .sidebar{ position:fixed; left:0; top:0; z-index:40; transform:translateX(-100%); transition:transform .22s ease; box-shadow:0 0 40px rgba(0,0,0,0.15); }
+    .sidebar{ position:fixed; left:0; top:0; z-index:40; transform:translateX(-100%); transition:transform .2s ease; box-shadow:0 0 40px rgba(0,0,0,0.14); }
     .sidebar.open{ transform:translateX(0); }
-    .drawer-overlay{ display:none; position:fixed; inset:0; background:rgba(15,23,42,0.42); z-index:35; }
+    .drawer-overlay{ display:none; position:fixed; inset:0; background:rgba(15,23,42,0.4); z-index:35; }
     .drawer-overlay.open{ display:block; }
 
     .mobile-topbar{
@@ -225,9 +217,9 @@
       position:sticky; top:0; background:var(--card); border-bottom:1px solid var(--border);
       padding:12px 16px; z-index:20;
     }
-    .hamburger{ background:transparent; border:1px solid var(--border); width:38px; height:38px; border-radius:10px; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+    .hamburger{ background:transparent; border:1px solid var(--border); width:36px; height:36px; border-radius:var(--radius-sm); display:flex; align-items:center; justify-content:center; flex-shrink:0; color:var(--text-dim); }
     .mobile-topbar .brandmark{ overflow:hidden; }
-    .mobile-topbar .bname{ font-size:0.88rem; }
+    .mobile-topbar .bname{ font-size:0.86rem; }
     .mobile-topbar .bsub{ display:none; }
 
     .main-header{ padding:14px 16px; }
@@ -237,9 +229,6 @@
   @media (min-width:861px){
     .sidebar{ transform:none !important; }
   }
-
-#assignOverlay{position:fixed;inset:0;background:rgba(255,255,255,.85);display:none;align-items:center;justify-content:center;z-index:9999;flex-direction:column;font-family:inherit}
-.loader{width:54px;height:54px;border:6px solid #dbeafe;border-top-color:#2563eb;border-radius:50%;animation:spin .8s linear infinite}
 </style>
 </head>
 <body>
@@ -247,12 +236,12 @@
 <!-- reusable brand logo -->
 <template id="logo-svg">
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
-    <rect width="64" height="64" rx="16" fill="#2563eb"></rect>
+    <rect width="64" height="64" rx="14" fill="#1d4ed8"></rect>
     <path d="M18 46V18h15c3.5 0 6.2.9 8 2.7 1.8 1.7 2.7 3.8 2.7 6.3 0 1.7-.5 3.2-1.5 4.4-.9 1.1-2 1.8-3.2 2.2 1.7.3 3 1.2 4 2.5 1 1.3 1.5 2.9 1.5 4.8 0 2.9-1 5.1-3 6.7-2 1.6-4.8 2.4-8.5 2.4H18zm6.2-17h8.3c1.9 0 3.3-.5 4.2-1.3.9-.8 1.4-1.9 1.4-3.2 0-1.4-.5-2.5-1.4-3.2-.9-.8-2.3-1.2-4.1-1.2h-8.4v8.9zm0 12h9.2c2 0 3.5-.5 4.5-1.5 1-.9 1.5-2.2 1.5-3.7s-.5-2.8-1.5-3.7c-1-1-2.5-1.4-4.5-1.4h-9.2v10.3z" fill="white"></path>
   </svg>
 </template>
 
-<!-- ═══════════ LOGIN ═══════════ -->
+<!-- ================ LOGIN ================ -->
 <div id="login-screen">
   <div class="login-card">
     <div class="brandmark">
@@ -262,18 +251,18 @@
         <div class="bsub">Books Panel</div>
       </div>
     </div>
-    <h1>Intern log in</h1>
+    <h1>Intern sign in</h1>
     <p>Use the account that was given to you.</p>
     <label for="login-user">Username</label>
     <input id="login-user" type="text" autocomplete="username" />
     <label for="login-pass">Password</label>
     <input id="login-pass" type="password" autocomplete="current-password" />
-    <button class="btn-primary" id="login-btn" onclick="doLogin()"><span id="login-btn-text">Log in</span></button>
+    <button class="btn-primary" id="login-btn" onclick="doLogin()"><span id="login-btn-text">Sign in</span></button>
     <div class="err-msg" id="login-error"></div>
   </div>
 </div>
 
-<!-- ═══════════ APP ═══════════ -->
+<!-- ================ APP ================ -->
 <div id="app">
   <div class="drawer-overlay" id="drawer-overlay" onclick="closeDrawer()"></div>
 
@@ -293,12 +282,12 @@
 
       <nav class="sidebar-nav">
         <button class="nav-btn active" id="tab-btn-assign" onclick="switchTab('assign')">
-          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
           Assign books
           <span class="nbadge" id="tab-count-assign">0</span>
         </button>
         <button class="nav-btn" id="tab-btn-mine" onclick="switchTab('mine')">
-          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-7 8-7s8 3 8 7"/></svg>
           My submissions
           <span class="nbadge" id="tab-count-mine">0</span>
         </button>
@@ -315,7 +304,7 @@
         <div class="foot-clock"><span class="dot"></span><span id="foot-clock">-</span></div>
         <button class="btn-logout" onclick="doLogout()">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
-          Log out
+          Sign out
         </button>
       </div>
     </aside>
@@ -324,7 +313,7 @@
     <div class="main">
       <div class="mobile-topbar">
         <button class="hamburger" onclick="openDrawer()" aria-label="Open menu">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
         </button>
         <div class="brandmark">
           <span data-logo></span>
@@ -333,8 +322,8 @@
             <div class="bsub">Books Panel</div>
           </div>
         </div>
-        <button class="hamburger" onclick="loadSubmissions()" aria-label="Refresh">
-          <svg id="mtb-refresh-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+        <button class="hamburger" onclick="loadCurrentTabData()" aria-label="Refresh">
+          <svg id="mtb-refresh-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
         </button>
       </div>
 
@@ -347,10 +336,10 @@
         <div class="toolbar">
           <div class="search-wrap">
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-            <input id="search-input" type="text" placeholder="Search title, subject, department..." oninput="onSearchInput()" />
+            <input id="search-input" type="text" placeholder="Search title, subject, department" oninput="onSearchInput()" />
           </div>
           <span class="count-pill" id="count-pill">-</span>
-          <button class="btn-refresh" id="refresh-btn" onclick="loadSubmissions()">
+          <button class="btn-refresh" id="refresh-btn" onclick="loadCurrentTabData()">
             <svg id="refresh-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
             Refresh
           </button>
@@ -362,10 +351,10 @@
   </div>
 </div>
 
-<div id="assignOverlay"><div class="loader"></div><div id="assignMsg" style="margin-top:16px;font-weight:700">Preparing...</div></div><div id="toast-wrap"></div>
+<div id="toast-wrap"></div>
 
 <script>
-/* Standalone — no dependency on the main site repo. Same URL as js/sheets.js's APPS_SCRIPT_URL. */
+/* Standalone, no dependency on the main site repo. Same URL as js/sheets.js's APPS_SCRIPT_URL. */
 const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw_5Jw4WCXqedXslj6MGd_EgRhl75eUMZZQvc8vong9TYkeJg29O5yoKnoRBTsoqLp6VA/exec';
 
 const BRANCHES = [
@@ -381,12 +370,13 @@ const BRANCHES = [
 const PAGE_SIZE = 8;
 
 let SESSION = null; // { token, name, rowStart, rowEnd }
-let ASSIGN_ROWS = [];\nlet MY_ROWS = [];
+let SUBMISSIONS = [];    // "assign" tab: unassigned rows inside my row range
+let MY_SUBMISSIONS = []; // "mine" tab: my own unassigned rows, sheet-wide
 let ACTIVE_TAB = 'assign'; // 'assign' | 'mine'
 let SEARCH_TERM = '';
 let VISIBLE_COUNT = PAGE_SIZE;
 
-/* ── inject logo svg into every placeholder ── */
+/* inject logo svg into every placeholder */
 function paintLogos() {
   const tpl = document.getElementById('logo-svg');
   document.querySelectorAll('[data-logo]').forEach(el => {
@@ -395,7 +385,7 @@ function paintLogos() {
 }
 paintLogos();
 
-/* ── low-level API call (mirrors the cors/text-plain trick already used in sheets.js) ── */
+/* low-level API call (mirrors the cors/text-plain trick already used in sheets.js) */
 async function callApi(action, payload) {
   const body = JSON.stringify({ action, ...payload });
   const res = await fetch(APPS_SCRIPT_URL, {
@@ -409,7 +399,7 @@ async function callApi(action, payload) {
   return json;
 }
 
-/* ── auth ── */
+/* auth */
 async function doLogin() {
   const user = document.getElementById('login-user').value.trim();
   const pass = document.getElementById('login-pass').value;
@@ -420,20 +410,17 @@ async function doLogin() {
   if (!user || !pass) { err.innerHTML = warnIcon() + '<span>Enter username and password</span>'; err.style.display = 'flex'; return; }
 
   btn.disabled = true;
-  btnText.innerHTML = '<span class="spinner"></span> Logging in';
-  btn.querySelector('#login-btn-text').style.display = 'flex';
-  btn.querySelector('#login-btn-text').style.gap = '9px';
-  btn.querySelector('#login-btn-text').style.alignItems = 'center';
+  btnText.innerHTML = '<span class="spinner"></span> Signing in';
   try {
     const res = await callApi('login', { username: user, password: pass });
-    SESSION = { token: res.token, username: res.username, name: res.name, rowStart: res.rowStart, rowEnd: res.rowEnd };
+    SESSION = { token: res.token, name: res.name, rowStart: res.rowStart, rowEnd: res.rowEnd };
     sessionStorage.setItem('bpn_intern_session', JSON.stringify(SESSION));
     enterApp();
   } catch (e) {
     err.innerHTML = warnIcon() + '<span>' + escapeHtml(e.message) + '</span>';
     err.style.display = 'flex';
   } finally {
-    btn.disabled = false; btnText.textContent = 'Log in';
+    btn.disabled = false; btnText.textContent = 'Sign in';
   }
 }
 
@@ -454,10 +441,10 @@ function enterApp() {
   document.getElementById('foot-range').textContent = `Rows ${SESSION.rowStart} to ${SESSION.rowEnd}`;
   startClock();
   switchTab('assign');
-  loadSubmissions();
+  loadAllData();
 }
 
-/* ── live clock ── */
+/* live clock */
 let clockTimer = null;
 function startClock() {
   updateClock();
@@ -470,10 +457,10 @@ function updateClock() {
   const now = new Date();
   const datePart = now.toLocaleDateString(undefined, { weekday:'short', day:'2-digit', month:'short' });
   const timePart = now.toLocaleTimeString(undefined, { hour:'2-digit', minute:'2-digit', second:'2-digit' });
-  el.textContent = `${datePart} · ${timePart}`;
+  el.textContent = `${datePart}  ${timePart}`;
 }
 
-/* ── drawer (mobile) ── */
+/* drawer (mobile) */
 function openDrawer() {
   document.getElementById('sidebar').classList.add('open');
   document.getElementById('drawer-overlay').classList.add('open');
@@ -483,7 +470,7 @@ function closeDrawer() {
   document.getElementById('drawer-overlay').classList.remove('open');
 }
 
-/* ── tabs ── */
+/* tabs */
 function switchTab(tab) {
   ACTIVE_TAB = tab;
   VISIBLE_COUNT = PAGE_SIZE;
@@ -497,15 +484,9 @@ function switchTab(tab) {
   renderList();
 }
 
+/* data used by the currently active tab, after search filtering */
 function currentTabData() {
-  let data = ACTIVE_TAB==='assign'?ASSIGN_ROWS:MY_ROWS;
-  if (ACTIVE_TAB === 'mine' && SESSION) {
-    const names = [
-      (SESSION.username||'').trim().toLowerCase(),
-      (SESSION.name||'').trim().toLowerCase()
-    ].filter(Boolean);
-    data = data.filter(s => names.includes((s.internName||'').trim().toLowerCase()));
-  }
+  let data = ACTIVE_TAB === 'mine' ? MY_SUBMISSIONS : SUBMISSIONS;
   if (SEARCH_TERM) {
     const q = SEARCH_TERM.toLowerCase();
     data = data.filter(s =>
@@ -524,29 +505,58 @@ function onSearchInput() {
   renderList();
 }
 
-/* ── data ── */
-async function loadSubmissions() {
+/* data loading */
+async function loadAllData() {
   showListLoading();
   spinRefreshIcons(true);
   try {
-    const res = await callApi('getSubmissions', { token: SESSION.token });
-    ASSIGN_ROWS = res.assignRows||[];
-    MY_ROWS = res.myRows||[];
+    const [assignRes, mineRes] = await Promise.all([
+      callApi('getSubmissions', { token: SESSION.token }),
+      callApi('getMySubmissions', { token: SESSION.token }),
+    ]);
+    SUBMISSIONS = assignRes.rows;
+    MY_SUBMISSIONS = mineRes.rows;
     VISIBLE_COUNT = PAGE_SIZE;
     updateTabCounts();
     renderList();
   } catch (e) {
-    if (/session expired/i.test(e.message)) {
-      showToast('Session expired, please log in again', 'error');
-      doLogout();
-      return;
-    }
-    document.getElementById('assignOverlay').style.display='none';clearInterval(mt);showToast(e.message, 'error');
-    document.getElementById('list').innerHTML = `<div class="empty-state">${warnIconBig()}<p>Could not load submissions</p></div>`;
-    document.getElementById('count-pill').textContent = 'Error';
+    handleLoadError(e);
   } finally {
     spinRefreshIcons(false);
   }
+}
+
+/* refresh only whichever tab is currently open, used by the refresh buttons */
+async function loadCurrentTabData() {
+  showListLoading();
+  spinRefreshIcons(true);
+  try {
+    if (ACTIVE_TAB === 'mine') {
+      const res = await callApi('getMySubmissions', { token: SESSION.token });
+      MY_SUBMISSIONS = res.rows;
+    } else {
+      const res = await callApi('getSubmissions', { token: SESSION.token });
+      SUBMISSIONS = res.rows;
+    }
+    VISIBLE_COUNT = PAGE_SIZE;
+    updateTabCounts();
+    renderList();
+  } catch (e) {
+    handleLoadError(e);
+  } finally {
+    spinRefreshIcons(false);
+  }
+}
+
+function handleLoadError(e) {
+  if (/session expired/i.test(e.message)) {
+    showToast('Session expired, please sign in again', 'error');
+    doLogout();
+    return;
+  }
+  showToast(e.message, 'error');
+  document.getElementById('list').innerHTML = `<div class="empty-state">${warnIconBig()}<p>Could not load submissions</p></div>`;
+  document.getElementById('count-pill').textContent = 'Error';
 }
 
 function spinRefreshIcons(on) {
@@ -557,13 +567,8 @@ function spinRefreshIcons(on) {
 }
 
 function updateTabCounts() {
-  const names=[
-    ((SESSION&&SESSION.username)||'').trim().toLowerCase(),
-    ((SESSION&&SESSION.name)||'').trim().toLowerCase()
-  ].filter(Boolean);
-  const mine=SUBMISSIONS.filter(s=>names.includes((s.internName||'').trim().toLowerCase())).length;
   document.getElementById('tab-count-assign').textContent = SUBMISSIONS.length;
-  document.getElementById('tab-count-mine').textContent = mine;
+  document.getElementById('tab-count-mine').textContent = MY_SUBMISSIONS.length;
 }
 
 function showListLoading() {
@@ -572,7 +577,7 @@ function showListLoading() {
   list.innerHTML = `
     <div class="book-loader">
       <div class="pages"><span></span><span></span><span></span></div>
-      <div class="ltext">Fetching submissions...</div>
+      <div class="ltext">Fetching submissions</div>
     </div>`;
 }
 
@@ -582,7 +587,7 @@ function renderList() {
   document.getElementById('count-pill').textContent = `${data.length} ${ACTIVE_TAB === 'assign' ? 'unassigned' : 'of mine'}`;
 
   if (!data.length) {
-    const msg = ACTIVE_TAB === 'assign' ? 'Nothing left to assign in your rows.' : "You haven't submitted anything pending here yet.";
+    const msg = ACTIVE_TAB === 'assign' ? 'Nothing left to assign in your rows.' : 'You have not submitted anything pending here yet.';
     list.innerHTML = `<div class="empty-state">${checkIconBig()}<p>${msg}</p></div>`;
     return;
   }
@@ -590,7 +595,7 @@ function renderList() {
   const slice = data.slice(0, VISIBLE_COUNT);
   let html = slice.map(s => cardHtml(s)).join('');
   if (data.length > slice.length) {
-    html += `<button class="btn-loadmore" onclick="loadMore()">Load ${Math.min(PAGE_SIZE, data.length - slice.length)} more (${data.length - slice.length} left)</button>`;
+    html += `<button class="btn-loadmore" onclick="loadMore()">Load ${Math.min(PAGE_SIZE, data.length - slice.length)} more, ${data.length - slice.length} left</button>`;
   }
   list.innerHTML = html;
 }
@@ -632,16 +637,16 @@ function assignFormHtml(s) {
       </select>
     </div>
     <div>
-      <label>Subject #</label>
+      <label>Subject number</label>
       <select id="subnum-${s.rowIndex}">
         ${[1,2,3,4,5,6].map(n=>`<option value="${n}">${n}</option>`).join('')}
       </select>
     </div>
     <div class="full" id="branchwrap-${s.rowIndex}">
-      <label>Branch / Group</label>
+      <label>Branch or group</label>
       <select id="branch-${s.rowIndex}">
         ${showGroup ? `
-          <optgroup label="Sem 1/2 groups (creates multiple entries)">
+          <optgroup label="Sem 1/2 groups, creates multiple entries">
             <option value="group:circuit">Circuit, 4 branches (Elec, Civil, Mining, Mech)</option>
             <option value="group:non-circuit">Non-Circuit, 3 branches (CSE, Mineral, Metallurgy)</option>
           </optgroup>` : ''}
@@ -649,18 +654,18 @@ function assignFormHtml(s) {
           ${BRANCHES.map(b=>`<option value="branch:${b.v}">${b.l}</option>`).join('')}
         </optgroup>
       </select>
-      <div class="form-hint">${showGroup ? 'Pick a group to auto-create one entry per branch, or pick a single branch.' : 'Pick the branch this subject belongs to.'}</div>
+      <div class="form-hint">${showGroup ? 'Pick a group to auto create one entry per branch, or pick a single branch.' : 'Pick the branch this subject belongs to.'}</div>
     </div>
     <div class="full">
-      <label>Subject Name</label>
+      <label>Subject name</label>
       <input id="subname-${s.rowIndex}" type="text" value="${escapeAttr(s.subject||'')}" />
     </div>
     <div class="full">
-      <label>Book Name</label>
+      <label>Book name</label>
       <input id="bookname-${s.rowIndex}" type="text" value="${escapeAttr(s.bookTitle||'')}" />
     </div>
     <div class="full">
-      <label>Drive Link</label>
+      <label>Drive link</label>
       <input id="link-${s.rowIndex}" type="url" value="${escapeAttr(s.bookLink||'')}" />
     </div>
     <div class="full">
@@ -679,7 +684,7 @@ function toggleGroup(rowIndex) {
   const select = document.getElementById(`branch-${rowIndex}`);
   select.innerHTML = `
     ${showGroup ? `
-      <optgroup label="Sem 1/2 groups (creates multiple entries)">
+      <optgroup label="Sem 1/2 groups, creates multiple entries">
         <option value="group:circuit">Circuit, 4 branches (Elec, Civil, Mining, Mech)</option>
         <option value="group:non-circuit">Non-Circuit, 3 branches (CSE, Mineral, Metallurgy)</option>
       </optgroup>` : ''}
@@ -715,12 +720,13 @@ async function submitAssign(rowIndex) {
   if (branchVal.startsWith('group:')) payload.group = branchVal.split(':')[1];
   else payload.branch = branchVal.split(':')[1];
 
-  document.getElementById('assignOverlay').style.display='flex';const msgs=['Preparing book...','Copying to Drive...','Updating database...'];let mi=0;document.getElementById('assignMsg').textContent=msgs[0];let mt=setInterval(()=>{mi=(mi+1)%msgs.length;document.getElementById('assignMsg').textContent=msgs[mi];},900);btn.disabled=true; btnText.innerHTML='<span class="spinner dark" style="border-color:rgba(255,255,255,0.35); border-top-color:#fff;"></span> Saving';
+  btn.disabled = true; btnText.innerHTML = '<span class="spinner dark"></span> Saving';
   try {
     const res = await callApi('assignBook', payload);
-    clearInterval(mt);document.getElementById('assignMsg').textContent='Finished!';setTimeout(()=>document.getElementById('assignOverlay').style.display='none',500);showToast(`Added to ${res.branchesAssigned.length} branch(es): ${res.branchesAssigned.join(', ')}`, 'success');
+    showToast(`Added to ${res.branchesAssigned.length} branch(es): ${res.branchesAssigned.join(', ')}`, 'success');
     if (res.driveWarning) showToast(res.driveWarning, 'error');
     SUBMISSIONS = SUBMISSIONS.filter(s => s.rowIndex !== rowIndex);
+    MY_SUBMISSIONS = MY_SUBMISSIONS.filter(s => s.rowIndex !== rowIndex);
     updateTabCounts();
     renderList();
   } catch (e) {
@@ -729,14 +735,14 @@ async function submitAssign(rowIndex) {
   }
 }
 
-/* ── icons ── */
+/* icons */
 function checkIcon(){ return '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>'; }
 function linkIcon(){ return '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>'; }
 function warnIcon(){ return '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>'; }
-function warnIconBig(){ return '<svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>'; }
-function checkIconBig(){ return '<svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="8 12 11 15 16 9"/></svg>'; }
+function warnIconBig(){ return '<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>'; }
+function checkIconBig(){ return '<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="8 12 11 15 16 9"/></svg>'; }
 
-/* ── utils ── */
+/* utils */
 function escapeHtml(str) {
   return String(str).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 }
@@ -754,7 +760,7 @@ function showToast(msg, type='info') {
 
 document.getElementById('login-pass').addEventListener('keydown', e => { if (e.key === 'Enter') doLogin(); });
 
-/* ── resume session on reload ── */
+/* resume session on reload */
 (function init() {
   const raw = sessionStorage.getItem('bpn_intern_session');
   if (raw) {
