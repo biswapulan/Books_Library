@@ -2,741 +2,160 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-<title>Books Panel — BPUTNotes.in</title>
-<meta name="robots" content="noindex,nofollow" />
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Access Revoked | bputnotes.in</title>
+
 <style>
-  :root{
-    --blue:#2563eb; --blue-dark:#1e4fa0; --blue-light:#eff4ff; --amber:#f59e0b;
-    --bg:#f6f8fb; --card:#ffffff; --border:#e4e9f1;
-    --text:#0f172a; --text-dim:#4b5871; --text-mute:#93a0b4;
-    --green:#16a34a; --green-bg:#eef9f1; --red:#dc2626; --red-bg:#fdeeee;
-    --sidebar-w:252px; --radius:14px; --radius-sm:9px;
-    --font-display:'Sora', system-ui, sans-serif;
-    --font-body:'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  }
-  *{box-sizing:border-box;}
-  html,body{ height:100%; }
-  body{
-    margin:0; font-family:var(--font-body);
-    background:var(--bg); color:var(--text); -webkit-font-smoothing:antialiased;
-  }
-  ::selection{ background:rgba(37,99,235,0.18); }
-  button{ font-family:inherit; cursor:pointer; border:none; border-radius:var(--radius-sm); font-weight:700; }
-  input, select{
-    width:100%; padding:11px 12px; border:1px solid var(--border); border-radius:var(--radius-sm);
-    font-size:0.95rem; background:#fff; color:var(--text); font-family:inherit;
-  }
-  input:focus, select:focus{ outline:2px solid var(--blue); outline-offset:1px; }
-  label{ display:block; font-size:0.76rem; font-weight:600; color:var(--text-dim); margin:14px 0 6px; letter-spacing:.01em; }
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Inter,Segoe UI,Arial,sans-serif;
+}
 
-  .brandmark{ display:flex; align-items:center; gap:10px; }
-  .brandmark svg{ flex-shrink:0; width:38px; height:38px; border-radius:10px; box-shadow:0 3px 10px rgba(37,99,235,0.25); }
-  .brandmark .btxt{ line-height:1.15; }
-  .brandmark .bname{ font-family:var(--font-display); font-weight:800; font-size:1rem; letter-spacing:-.01em; }
-  .brandmark .bsub{ font-size:0.7rem; color:var(--text-mute); font-weight:600; letter-spacing:.02em; text-transform:uppercase; }
+body{
+    min-height:100vh;
+    background:#f8fafc;
+    display:flex;
+    flex-direction:column;
+}
 
-  #login-screen{
-    min-height:100vh; display:flex; align-items:center; justify-content:center; padding:24px;
-    background:
-      radial-gradient(600px circle at 15% -5%, rgba(37,99,235,0.10), transparent 60%),
-      radial-gradient(500px circle at 100% 100%, rgba(245,158,11,0.08), transparent 55%),
-      var(--bg);
-  }
-  .login-card{
-    background:var(--card); border:1px solid var(--border); border-radius:20px;
-    padding:32px 26px; width:100%; max-width:380px; box-shadow:0 14px 40px rgba(15,23,42,0.08);
-  }
-  .login-card .brandmark{ margin-bottom:22px; }
-  .login-card .brandmark svg{ width:46px; height:46px; }
-  .login-card .brandmark .bname{ font-size:1.15rem; }
-  .login-card h1{ font-family:var(--font-display); font-size:1.2rem; font-weight:700; margin:0 0 4px; }
-  .login-card p{ font-size:0.85rem; color:var(--text-mute); margin:0 0 4px; line-height:1.5; }
-  .btn-primary{
-    width:100%; background:var(--blue); color:#fff; padding:12px; font-size:0.95rem; margin-top:20px;
-    display:flex; align-items:center; justify-content:center; gap:9px; transition:background .15s;
-  }
-  .btn-primary:hover:not(:disabled){ background:var(--blue-dark); }
-  .btn-primary:disabled{ opacity:0.75; cursor:default; }
-  .err-msg{
-    background:var(--red-bg); color:var(--red); border:1px solid rgba(220,38,38,0.18);
-    border-radius:var(--radius-sm); padding:10px 12px; font-size:0.82rem; margin-top:14px; display:none;
-    align-items:center; gap:8px;
-  }
+/* Header */
+header{
+    height:72px;
+    background:#ffffff;
+    border-bottom:1px solid #e5e7eb;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    position:sticky;
+    top:0;
+}
 
-  .spinner{
-    width:16px; height:16px; border-radius:50%;
-    border:2px solid rgba(255,255,255,0.35); border-top-color:#fff;
-    animation:spin .7s linear infinite; flex-shrink:0;
-  }
-  .spinner.dark{ border:2px solid rgba(37,99,235,0.2); border-top-color:var(--blue); }
-  @keyframes spin{ to{ transform:rotate(360deg); } }
+.brand{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    font-size:1.25rem;
+    font-weight:700;
+    color:#1e293b;
+}
 
-  .book-loader{ display:flex; flex-direction:column; align-items:center; justify-content:center; padding:56px 20px; gap:14px; }
-  .book-loader .pages{ position:relative; width:46px; height:36px; }
-  .book-loader .pages span{
-    position:absolute; inset:0; background:var(--card); border:2px solid var(--blue);
-    border-radius:4px 8px 8px 4px; transform-origin:left center;
-    animation:pageflip 1.1s ease-in-out infinite;
-  }
-  .book-loader .pages span:nth-child(1){ animation-delay:0s; }
-  .book-loader .pages span:nth-child(2){ animation-delay:.22s; }
-  .book-loader .pages span:nth-child(3){ animation-delay:.44s; }
-  @keyframes pageflip{
-    0%{ transform:rotateY(0deg); opacity:1; }
-    50%{ transform:rotateY(-140deg); opacity:.55; }
-    100%{ transform:rotateY(0deg); opacity:1; }
-  }
-  .book-loader .ltext{ font-size:0.8rem; color:var(--text-mute); font-weight:600; }
+.logo{
+    width:46px;
+    height:46px;
+}
 
-  .skel-card{ background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:16px; margin-bottom:12px; }
-  .skel-line{ height:12px; border-radius:6px; background:linear-gradient(90deg,#eef1f6 25%,#f7f9fc 37%,#eef1f6 63%); background-size:400% 100%; animation:shimmer 1.3s ease infinite; }
-  @keyframes shimmer{ 0%{ background-position:100% 0; } 100%{ background-position:0 0; } }
-  .skel-card .skel-line.w60{ width:60%; margin-bottom:10px; }
-  .skel-card .skel-line.w40{ width:40%; margin-bottom:8px; height:10px; }
-  .skel-card .skel-line.w30{ width:30%; height:10px; }
+/* Center */
+main{
+    flex:1;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:24px;
+}
 
-  #app{ display:none; min-height:100vh; }
-  .shell{ display:flex; min-height:100vh; }
+.card{
+    width:100%;
+    max-width:600px;
+    background:#ffffff;
+    border:1px solid #e5e7eb;
+    border-radius:20px;
+    padding:48px 36px;
+    text-align:center;
+    box-shadow:0 20px 50px rgba(0,0,0,.08);
+}
 
-  .sidebar{
-    width:var(--sidebar-w); flex-shrink:0; background:var(--card); border-right:1px solid var(--border);
-    display:flex; flex-direction:column; position:sticky; top:0; height:100vh;
-  }
-  .sidebar-head{ padding:20px 18px 16px; border-bottom:1px solid var(--border); }
-  .sidebar-head .brandmark .bname{ font-size:1rem; }
-  .sidebar-panel-tag{ margin-top:12px; font-size:0.7rem; font-weight:700; color:var(--blue); background:var(--blue-light); display:inline-block; padding:4px 10px; border-radius:100px; letter-spacing:.02em; }
-  .sidebar-nav{ padding:14px 12px; display:flex; flex-direction:column; gap:4px; flex:1; }
-  .nav-btn{
-    display:flex; align-items:center; gap:10px; text-align:left; background:transparent; color:var(--text-dim);
-    padding:11px 12px; border-radius:var(--radius-sm); font-size:0.88rem; font-weight:600; width:100%;
-    transition:background .12s, color .12s;
-  }
-  .nav-btn svg{ flex-shrink:0; opacity:.8; }
-  .nav-btn:hover{ background:var(--bg); }
-  .nav-btn.active{ background:var(--blue-light); color:var(--blue); }
-  .nav-btn.active svg{ opacity:1; }
-  .nav-btn .nbadge{ margin-left:auto; font-size:0.68rem; font-weight:700; background:var(--border); color:var(--text-dim); padding:2px 7px; border-radius:100px; }
-  .nav-btn.active .nbadge{ background:var(--blue); color:#fff; }
+.small{
+    color:#64748b;
+    font-size:1.05rem;
+    margin-bottom:18px;
+}
 
-  .sidebar-foot{ padding:14px 18px 18px; border-top:1px solid var(--border); }
-  .foot-user{ display:flex; align-items:center; gap:10px; margin-bottom:10px; }
-  .foot-avatar{ width:32px; height:32px; border-radius:50%; background:var(--blue-light); color:var(--blue); display:flex; align-items:center; justify-content:center; font-weight:700; font-size:0.85rem; flex-shrink:0; }
-  .foot-name{ font-size:0.85rem; font-weight:700; line-height:1.2; }
-  .foot-range{ font-size:0.7rem; color:var(--text-mute); }
-  .foot-clock{ font-size:0.72rem; color:var(--text-mute); font-variant-numeric:tabular-nums; margin-bottom:10px; display:flex; align-items:center; gap:6px; }
-  .foot-clock .dot{ width:6px; height:6px; border-radius:50%; background:var(--green); flex-shrink:0; animation:pulse 2s ease infinite; }
-  @keyframes pulse{ 0%,100%{ opacity:1; } 50%{ opacity:.35; } }
-  .btn-logout{ width:100%; background:var(--bg); color:var(--text-dim); border:1px solid var(--border); padding:9px; font-size:0.78rem; display:flex; align-items:center; justify-content:center; gap:7px; }
-  .btn-logout:hover{ background:var(--red-bg); color:var(--red); border-color:rgba(220,38,38,0.2); }
+h1{
+    font-size:3rem;
+    font-weight:800;
+    color:#dc2626;
+    letter-spacing:1px;
+    margin-bottom:18px;
+}
 
-  .mobile-topbar{ display:none; }
-  .drawer-overlay{ display:none; }
+.desc{
+    color:#475569;
+    font-size:1.05rem;
+    line-height:1.7;
+}
 
-  .main{ flex:1; min-width:0; }
-  .main-header{
-    position:sticky; top:0; background:rgba(246,248,251,0.9); backdrop-filter:blur(8px);
-    border-bottom:1px solid var(--border); padding:16px 24px; z-index:5;
-  }
-  .main-header h2{ font-family:var(--font-display); font-size:1.15rem; font-weight:700; margin:0 0 2px; }
-  .main-header .sub{ font-size:0.8rem; color:var(--text-mute); }
-  .wrap{ max-width:760px; margin:0 auto; padding:18px 24px 90px; }
+/* Footer */
+footer{
+    padding:18px;
+    text-align:center;
+    color:#64748b;
+    font-size:.95rem;
+    border-top:1px solid #e5e7eb;
+    background:#ffffff;
+}
 
-  .toolbar{ display:flex; gap:10px; align-items:center; margin-bottom:14px; flex-wrap:wrap; }
-  .search-wrap{ position:relative; flex:1; min-width:180px; }
-  .search-wrap svg{ position:absolute; left:11px; top:50%; transform:translateY(-50%); opacity:.45; }
-  .search-wrap input{ padding-left:34px; }
-  .count-pill{ font-size:0.76rem; font-weight:600; color:var(--text-dim); background:var(--card); border:1px solid var(--border); padding:6px 12px; border-radius:100px; white-space:nowrap; display:flex; align-items:center; gap:6px; }
-  .btn-refresh{ background:var(--card); border:1px solid var(--border); color:var(--text-dim); padding:9px 12px; font-size:0.78rem; display:flex; align-items:center; gap:6px; }
-  .btn-refresh:hover{ background:var(--bg); }
-  .btn-refresh svg.spin{ animation:spin .7s linear infinite; }
+footer strong{
+    color:#2563eb;
+}
 
-  .card{ background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:16px; margin-bottom:12px; transition:box-shadow .15s; }
-  .card:hover{ box-shadow:0 4px 14px rgba(15,23,42,0.05); }
-  .card-top{ display:flex; justify-content:space-between; gap:10px; margin-bottom:6px; }
-  .book-title{ font-weight:700; font-size:0.96rem; line-height:1.35; }
-  .badge{ font-size:0.66rem; font-weight:700; padding:3px 9px; border-radius:100px; white-space:nowrap; background:var(--blue-light); color:var(--blue); height:fit-content; }
-  .meta{ font-size:0.79rem; color:var(--text-dim); margin:3px 0; }
-  .meta b{ color:var(--text); }
-  .dot-sep{ color:var(--text-mute); margin:0 5px; }
-  .note-line{ font-size:0.79rem; color:var(--text-mute); margin-top:6px; font-style:italic; border-left:2px solid var(--border); padding-left:8px; }
-  .card a.link-btn{ display:inline-flex; align-items:center; gap:5px; margin-top:9px; font-size:0.79rem; color:var(--blue); text-decoration:none; font-weight:600; }
-  .card a.link-btn:hover{ text-decoration:underline; }
+@media(max-width:600px){
 
-  details{ margin-top:11px; }
-  summary{
-    list-style:none; cursor:pointer; font-size:0.83rem; font-weight:700; color:var(--blue);
-    padding:10px 0; border-top:1px dashed var(--border); display:flex; align-items:center; gap:7px;
-  }
-  summary::-webkit-details-marker{ display:none; }
-  summary .chev{ transition:transform .18s; }
-  details[open] summary .chev{ transform:rotate(90deg); }
+.card{
+    padding:36px 24px;
+}
 
-  .form-grid{ display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:6px; }
-  .form-grid .full{ grid-column:1/-1; }
-  .form-hint{ font-size:0.7rem; color:var(--text-mute); margin-top:4px; }
-  .btn-assign{
-    width:100%; background:var(--green); color:#fff; padding:12px; font-size:0.88rem; margin-top:15px;
-    display:flex; align-items:center; justify-content:center; gap:8px; transition:background .15s;
-  }
-  .btn-assign:hover:not(:disabled){ background:#12703a; }
-  .btn-assign:disabled{ opacity:0.7; }
+h1{
+    font-size:2.2rem;
+}
 
-  .empty-state{ text-align:center; padding:60px 20px; color:var(--text-mute); }
-  .empty-state svg{ opacity:.35; margin-bottom:10px; }
-  .empty-state p{ font-size:0.88rem; margin:0; }
+.small{
+    font-size:1rem;
+}
 
-  .btn-loadmore{ width:100%; background:var(--card); border:1px solid var(--border); color:var(--text-dim); padding:12px; font-size:0.84rem; margin-top:4px; }
-  .btn-loadmore:hover{ background:var(--bg); border-color:var(--blue); color:var(--blue); }
-
-  #toast-wrap{ position:fixed; bottom:18px; left:0; right:0; display:flex; flex-direction:column; align-items:center; gap:8px; z-index:100; pointer-events:none; padding:0 16px; }
-  .toast{
-    display:flex; align-items:center; gap:9px; background:var(--text); color:#fff; padding:11px 16px; border-radius:10px; font-size:0.82rem;
-    max-width:420px; width:100%; box-shadow:0 8px 24px rgba(0,0,0,0.18); animation:fadein .2s ease;
-  }
-  .toast.success{ background:#14532d; }
-  .toast.error{ background:#7f1d1d; }
-  .toast svg{ flex-shrink:0; }
-  @keyframes fadein{ from{opacity:0; transform:translateY(8px);} to{opacity:1; transform:translateY(0);} }
-
-  @media (max-width:860px){
-    .sidebar{ position:fixed; left:0; top:0; z-index:40; transform:translateX(-100%); transition:transform .22s ease; box-shadow:0 0 40px rgba(0,0,0,0.15); }
-    .sidebar.open{ transform:translateX(0); }
-    .drawer-overlay{ display:none; position:fixed; inset:0; background:rgba(15,23,42,0.42); z-index:35; }
-    .drawer-overlay.open{ display:block; }
-
-    .mobile-topbar{
-      display:flex; align-items:center; justify-content:space-between; gap:10px;
-      position:sticky; top:0; background:var(--card); border-bottom:1px solid var(--border);
-      padding:12px 16px; z-index:20;
-    }
-    .hamburger{ background:transparent; border:1px solid var(--border); width:38px; height:38px; border-radius:10px; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
-    .mobile-topbar .brandmark{ overflow:hidden; }
-    .mobile-topbar .bname{ font-size:0.88rem; }
-    .mobile-topbar .bsub{ display:none; }
-
-    .main-header{ padding:14px 16px; }
-    .wrap{ padding:16px 16px 90px; }
-    .form-grid{ grid-template-columns:1fr; }
-  }
-  @media (min-width:861px){
-    .sidebar{ transform:none !important; }
-  }
+}
 </style>
 </head>
 <body>
 
-<template id="logo-svg">
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
-    <rect width="64" height="64" rx="16" fill="#2563eb"></rect>
-    <path d="M18 46V18h15c3.5 0 6.2.9 8 2.7 1.8 1.7 2.7 3.8 2.7 6.3 0 1.7-.5 3.2-1.5 4.4-.9 1.1-2 1.8-3.2 2.2 1.7.3 3 1.2 4 2.5 1 1.3 1.5 2.9 1.5 4.8 0 2.9-1 5.1-3 6.7-2 1.6-4.8 2.4-8.5 2.4H18zm6.2-17h8.3c1.9 0 3.3-.5 4.2-1.3.9-.8 1.4-1.9 1.4-3.2 0-1.4-.5-2.5-1.4-3.2-.9-.8-2.3-1.2-4.1-1.2h-8.4v8.9zm0 12h9.2c2 0 3.5-.5 4.5-1.5 1-.9 1.5-2.2 1.5-3.7s-.5-2.8-1.5-3.7c-1-1-2.5-1.4-4.5-1.4h-9.2v10.3z" fill="white"></path>
-  </svg>
-</template>
+<header>
 
-<div id="login-screen">
-  <div class="login-card">
-    <div class="brandmark">
-      <span data-logo></span>
-      <div class="btxt">
-        <div class="bname">bputnotes.in</div>
-        <div class="bsub">Books Panel</div>
-      </div>
-    </div>
-    <h1>Intern log in</h1>
-    <p>Use the account that was given to you.</p>
-    <label for="login-user">Username</label>
-    <input id="login-user" type="text" autocomplete="username" />
-    <label for="login-pass">Password</label>
-    <input id="login-pass" type="password" autocomplete="current-password" />
-    <button class="btn-primary" id="login-btn" onclick="doLogin()"><span id="login-btn-text">Log in</span></button>
-    <div class="err-msg" id="login-error"></div>
-  </div>
+<div class="brand">
+
+<!-- Logo -->
+<svg class="logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+<rect width="64" height="64" rx="16" fill="#2563eb"/>
+<path d="M18 46V18h15c3.5 0 6.2.9 8 2.7 1.8 1.7 2.7 3.8 2.7 6.3 0 1.7-.5 3.2-1.5 4.4-.9 1.1-2 1.8-3.2 2.2 1.7.3 3 1.2 4 2.5 1 1.3 1.5 2.9 1.5 4.8 0 2.9-1 5.1-3 6.7-2 1.6-4.8 2.4-8.5 2.4H18zm6.2-17h8.3c1.9 0 3.3-.5 4.2-1.3.9-.8 1.4-1.9 1.4-3.2 0-1.4-.5-2.5-1.4-3.2-.9-.8-2.3-1.2-4.1-1.2h-8.4v8.9zm0 12h9.2c2 0 3.5-.5 4.5-1.5 1-.9 1.5-2.2 1.5-3.7s-.5-2.8-1.5-3.7c-1-1-2.5-1.4-4.5-1.4h-9.2v10.3z" fill="white"/>
+</svg>
+
+<span>bputnotes.in</span>
+
 </div>
 
-<div id="app">
-  <div class="drawer-overlay" id="drawer-overlay" onclick="closeDrawer()"></div>
+</header>
 
-  <div class="shell">
-    <aside class="sidebar" id="sidebar">
-      <div class="sidebar-head">
-        <div class="brandmark">
-          <span data-logo></span>
-          <div class="btxt">
-            <div class="bname">bputnotes.in</div>
-            <div class="bsub">Books Panel</div>
-          </div>
-        </div>
-        <div class="sidebar-panel-tag">Intern workspace</div>
-      </div>
+<main>
 
-      <nav class="sidebar-nav">
-        <button class="nav-btn active" id="tab-btn-assign" onclick="switchTab('assign')">
-          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
-          Assign books
-          <span class="nbadge" id="tab-count-assign">0</span>
-        </button>
-        <button class="nav-btn" id="tab-btn-mine" onclick="switchTab('mine')">
-          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-7 8-7s8 3 8 7"/></svg>
-          My submissions
-          <span class="nbadge" id="tab-count-mine">0</span>
-        </button>
-      </nav>
+<div class="card">
 
-      <div class="sidebar-foot">
-        <div class="foot-user">
-          <div class="foot-avatar" id="foot-avatar">-</div>
-          <div>
-            <div class="foot-name" id="foot-name">-</div>
-            <div class="foot-range" id="foot-range"></div>
-          </div>
-        </div>
-        <div class="foot-clock"><span class="dot"></span><span id="foot-clock">-</span></div>
-        <button class="btn-logout" onclick="doLogout()">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
-          Log out
-        </button>
-      </div>
-    </aside>
+<p class="small">
+Community Summer Internship is now over.
+</p>
 
-    <div class="main">
-      <div class="mobile-topbar">
-        <button class="hamburger" onclick="openDrawer()" aria-label="Open menu">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
-        </button>
-        <div class="brandmark">
-          <span data-logo></span>
-          <div class="btxt">
-            <div class="bname">bputnotes.in</div>
-            <div class="bsub">Books Panel</div>
-          </div>
-        </div>
-        <button class="hamburger" onclick="loadSubmissions()" aria-label="Refresh">
-          <svg id="mtb-refresh-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
-        </button>
-      </div>
+<h1>ACCESS REVOKED</h1>
 
-      <div class="main-header">
-        <h2 id="page-title">Assign books</h2>
-        <div class="sub" id="page-sub">Unassigned submissions in your row range</div>
-      </div>
+<p class="desc">
+Your access to this internship portal has been disabled. Thank you for being a part of the Community Summer Internship Program.
+</p>
 
-      <div class="wrap">
-        <div class="toolbar">
-          <div class="search-wrap">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-            <input id="search-input" type="text" placeholder="Search title, subject, department..." oninput="onSearchInput()" />
-          </div>
-          <span class="count-pill" id="count-pill">-</span>
-          <button class="btn-refresh" id="refresh-btn" onclick="loadSubmissions()">
-            <svg id="refresh-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
-            Refresh
-          </button>
-        </div>
-
-        <div id="list"></div>
-      </div>
-    </div>
-  </div>
 </div>
 
-<div id="toast-wrap"></div>
+</main>
 
-<script>
-const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyzttH7qpG8mlMVmbrDElri48vJIOUshVvp8OkFqNd8-GtLprTUAbTbuKkeXmnqlvXT_w/exec';
+<footer>
+Designed and maintained with ❤️ by <strong>bputnotes.in</strong>
+</footer>
 
-const BRANCHES = [
-  { v:'cse',        l:'CSE' },
-  { v:'civil',      l:'Civil' },
-  { v:'electrical', l:'Electrical' },
-  { v:'mechanical', l:'Mechanical' },
-  { v:'mining',     l:'Mining' },
-  { v:'metallurgy', l:'Metallurgy' },
-  { v:'mineral',    l:'Mineral' },
-];
-
-const PAGE_SIZE = 8;
-
-let SESSION = null; // { token, name, rowStart, rowEnd }
-
-// Two SEPARATE lists now — this is the actual fix.
-// "Assign" is scoped server-side to the intern's row range.
-// "Mine" is scoped server-side by internName across the WHOLE sheet,
-// so a submission can show up there even if its row falls outside
-// the intern's assigned range.
-let SUBMISSIONS = [];      // Assign tab data
-let MY_SUBMISSIONS = [];   // My submissions tab data
-
-let ACTIVE_TAB = 'assign'; // 'assign' | 'mine'
-let SEARCH_TERM = '';
-let VISIBLE_COUNT = PAGE_SIZE;
-
-function paintLogos() {
-  const tpl = document.getElementById('logo-svg');
-  document.querySelectorAll('[data-logo]').forEach(el => {
-    if (!el.querySelector('svg')) el.appendChild(tpl.content.cloneNode(true));
-  });
-}
-paintLogos();
-
-async function callApi(action, payload) {
-  const body = JSON.stringify({ action, ...payload });
-  const res = await fetch(APPS_SCRIPT_URL, {
-    method: 'POST',
-    headers: { 'Content-Type': 'text/plain' },
-    body,
-    mode: 'cors',
-  });
-  const json = await res.json();
-  if (!json.success) throw new Error(json.error || 'Request failed');
-  return json;
-}
-
-async function doLogin() {
-  const user = document.getElementById('login-user').value.trim();
-  const pass = document.getElementById('login-pass').value;
-  const err  = document.getElementById('login-error');
-  const btn  = document.getElementById('login-btn');
-  const btnText = document.getElementById('login-btn-text');
-  err.style.display = 'none';
-  if (!user || !pass) { err.innerHTML = warnIcon() + '<span>Enter username and password</span>'; err.style.display = 'flex'; return; }
-
-  btn.disabled = true;
-  btnText.innerHTML = '<span class="spinner"></span> Logging in';
-  btn.querySelector('#login-btn-text').style.display = 'flex';
-  btn.querySelector('#login-btn-text').style.gap = '9px';
-  btn.querySelector('#login-btn-text').style.alignItems = 'center';
-  try {
-    const res = await callApi('login', { username: user, password: pass });
-    SESSION = { token: res.token, name: res.name, rowStart: res.rowStart, rowEnd: res.rowEnd };
-    sessionStorage.setItem('bpn_intern_session', JSON.stringify(SESSION));
-    enterApp();
-  } catch (e) {
-    err.innerHTML = warnIcon() + '<span>' + escapeHtml(e.message) + '</span>';
-    err.style.display = 'flex';
-  } finally {
-    btn.disabled = false; btnText.textContent = 'Log in';
-  }
-}
-
-function doLogout() {
-  sessionStorage.removeItem('bpn_intern_session');
-  SESSION = null;
-  stopClock();
-  document.getElementById('app').style.display = 'none';
-  document.getElementById('login-screen').style.display = 'flex';
-  document.getElementById('login-pass').value = '';
-}
-
-function enterApp() {
-  document.getElementById('login-screen').style.display = 'none';
-  document.getElementById('app').style.display = 'block';
-  document.getElementById('foot-name').textContent = SESSION.name;
-  document.getElementById('foot-avatar').textContent = (SESSION.name || '?').trim().charAt(0).toUpperCase();
-  document.getElementById('foot-range').textContent = `Rows ${SESSION.rowStart} to ${SESSION.rowEnd}`;
-  startClock();
-  switchTab('assign');
-  loadSubmissions();
-}
-
-let clockTimer = null;
-function startClock() {
-  updateClock();
-  clockTimer = setInterval(updateClock, 1000);
-}
-function stopClock() { if (clockTimer) clearInterval(clockTimer); }
-function updateClock() {
-  const el = document.getElementById('foot-clock');
-  if (!el) return;
-  const now = new Date();
-  const datePart = now.toLocaleDateString(undefined, { weekday:'short', day:'2-digit', month:'short' });
-  const timePart = now.toLocaleTimeString(undefined, { hour:'2-digit', minute:'2-digit', second:'2-digit' });
-  el.textContent = `${datePart} · ${timePart}`;
-}
-
-function openDrawer() {
-  document.getElementById('sidebar').classList.add('open');
-  document.getElementById('drawer-overlay').classList.add('open');
-}
-function closeDrawer() {
-  document.getElementById('sidebar').classList.remove('open');
-  document.getElementById('drawer-overlay').classList.remove('open');
-}
-
-function switchTab(tab) {
-  ACTIVE_TAB = tab;
-  VISIBLE_COUNT = PAGE_SIZE;
-  document.getElementById('tab-btn-assign').classList.toggle('active', tab === 'assign');
-  document.getElementById('tab-btn-mine').classList.toggle('active', tab === 'mine');
-  document.getElementById('page-title').textContent = tab === 'assign' ? 'Assign books' : 'My submissions';
-  document.getElementById('page-sub').textContent = tab === 'assign'
-    ? 'Unassigned submissions in your row range'
-    : 'Submissions you added, still unassigned';
-  closeDrawer();
-  renderList();
-}
-
-// Picks the right already-fetched list for the active tab, then applies search.
-// NOTE: no more client-side filtering by internName here — "mine" is now its
-// own server-scoped list (MY_SUBMISSIONS), fetched independently of row range.
-function currentTabData() {
-  let data = ACTIVE_TAB === 'mine' ? MY_SUBMISSIONS : SUBMISSIONS;
-  if (SEARCH_TERM) {
-    const q = SEARCH_TERM.toLowerCase();
-    data = data.filter(s =>
-      (s.bookTitle||'').toLowerCase().includes(q) ||
-      (s.subject||'').toLowerCase().includes(q) ||
-      (s.department||'').toLowerCase().includes(q) ||
-      (s.internName||'').toLowerCase().includes(q)
-    );
-  }
-  return data;
-}
-
-function onSearchInput() {
-  SEARCH_TERM = document.getElementById('search-input').value.trim();
-  VISIBLE_COUNT = PAGE_SIZE;
-  renderList();
-}
-
-// Fetches BOTH lists in parallel: the row-range-scoped "assign" list and the
-// whole-sheet "mine" list. This is what actually fixes "my submissions not
-// showing" — previously "mine" was just a filter on top of the range-scoped
-// list, so any of your own rows outside your row range never appeared.
-async function loadSubmissions() {
-  showListLoading();
-  spinRefreshIcons(true);
-  try {
-    const [assignRes, mineRes] = await Promise.all([
-      callApi('getSubmissions', { token: SESSION.token }),
-      callApi('getMySubmissions', { token: SESSION.token }),
-    ]);
-    SUBMISSIONS = assignRes.rows;
-    MY_SUBMISSIONS = mineRes.rows;
-    VISIBLE_COUNT = PAGE_SIZE;
-    updateTabCounts();
-    renderList();
-  } catch (e) {
-    if (/session expired/i.test(e.message)) {
-      showToast('Session expired, please log in again', 'error');
-      doLogout();
-      return;
-    }
-    showToast(e.message, 'error');
-    document.getElementById('list').innerHTML = `<div class="empty-state">${warnIconBig()}<p>Could not load submissions</p></div>`;
-    document.getElementById('count-pill').textContent = 'Error';
-  } finally {
-    spinRefreshIcons(false);
-  }
-}
-
-function spinRefreshIcons(on) {
-  ['refresh-icon','mtb-refresh-icon'].forEach(id => {
-    const el = document.getElementById(id);
-    if (el) el.classList.toggle('spin', on);
-  });
-}
-
-function updateTabCounts() {
-  document.getElementById('tab-count-assign').textContent = SUBMISSIONS.length;
-  document.getElementById('tab-count-mine').textContent = MY_SUBMISSIONS.length;
-}
-
-function showListLoading() {
-  const list = document.getElementById('list');
-  document.getElementById('count-pill').textContent = 'Loading';
-  list.innerHTML = `
-    <div class="book-loader">
-      <div class="pages"><span></span><span></span><span></span></div>
-      <div class="ltext">Fetching submissions...</div>
-    </div>`;
-}
-
-function renderList() {
-  const list = document.getElementById('list');
-  const data = currentTabData();
-  document.getElementById('count-pill').textContent = `${data.length} ${ACTIVE_TAB === 'assign' ? 'unassigned' : 'of mine'}`;
-
-  if (!data.length) {
-    const msg = ACTIVE_TAB === 'assign' ? 'Nothing left to assign in your rows.' : "You haven't submitted anything pending here yet.";
-    list.innerHTML = `<div class="empty-state">${checkIconBig()}<p>${msg}</p></div>`;
-    return;
-  }
-
-  const slice = data.slice(0, VISIBLE_COUNT);
-  let html = slice.map(s => cardHtml(s)).join('');
-  if (data.length > slice.length) {
-    html += `<button class="btn-loadmore" onclick="loadMore()">Load ${Math.min(PAGE_SIZE, data.length - slice.length)} more (${data.length - slice.length} left)</button>`;
-  }
-  list.innerHTML = html;
-}
-
-function loadMore() {
-  VISIBLE_COUNT += PAGE_SIZE;
-  renderList();
-}
-
-function cardHtml(s) {
-  const sem = parseInt(s.semester) || 1;
-  return `
-  <div class="card" id="card-${s.rowIndex}">
-    <div class="card-top">
-      <div class="book-title">${escapeHtml(s.bookTitle || 'Untitled')}</div>
-      <span class="badge">Row ${s.rowIndex}</span>
-    </div>
-    <div class="meta"><b>${escapeHtml(s.internName||'-')}</b><span class="dot-sep">&middot;</span>${escapeHtml(s.department||'-')}<span class="dot-sep">&middot;</span>Sem ${escapeHtml(String(s.semester||'-'))}</div>
-    <div class="meta">Subject: <b>${escapeHtml(s.subject||'-')}</b>${s.sourceType ? '<span class="dot-sep">&middot;</span>'+escapeHtml(s.sourceType) : ''}</div>
-    ${s.note ? `<div class="note-line">${escapeHtml(s.note)}</div>` : ''}
-    ${s.bookLink ? `<a class="link-btn" href="${escapeAttr(s.bookLink)}" target="_blank" rel="noopener">${linkIcon()} Open book link</a>` : ''}
-
-    <details>
-      <summary><svg class="chev" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg> Assign to main site</summary>
-      ${assignFormHtml(s)}
-    </details>
-  </div>`;
-}
-
-function assignFormHtml(s) {
-  const sem = parseInt(s.semester) || 1;
-  const showGroup = sem === 1 || sem === 2;
-  return `
-  <div class="form-grid">
-    <div>
-      <label>Semester</label>
-      <select id="sem-${s.rowIndex}" onchange="toggleGroup(${s.rowIndex})">
-        ${[1,2,3,4,5,6,7,8].map(n=>`<option value="${n}" ${n===sem?'selected':''}>${n}</option>`).join('')}
-      </select>
-    </div>
-    <div>
-      <label>Subject #</label>
-      <select id="subnum-${s.rowIndex}">
-        ${[1,2,3,4,5,6].map(n=>`<option value="${n}">${n}</option>`).join('')}
-      </select>
-    </div>
-    <div class="full" id="branchwrap-${s.rowIndex}">
-      <label>Branch / Group</label>
-      <select id="branch-${s.rowIndex}">
-        ${showGroup ? `
-          <optgroup label="Sem 1/2 groups (creates multiple entries)">
-            <option value="group:circuit">Circuit, 4 branches (Elec, Civil, Mining, Mech)</option>
-            <option value="group:non-circuit">Non-Circuit, 3 branches (CSE, Mineral, Metallurgy)</option>
-          </optgroup>` : ''}
-        <optgroup label="Single branch">
-          ${BRANCHES.map(b=>`<option value="branch:${b.v}">${b.l}</option>`).join('')}
-        </optgroup>
-      </select>
-      <div class="form-hint">${showGroup ? 'Pick a group to auto-create one entry per branch, or pick a single branch.' : 'Pick the branch this subject belongs to.'}</div>
-    </div>
-    <div class="full">
-      <label>Subject Name</label>
-      <input id="subname-${s.rowIndex}" type="text" value="${escapeAttr(s.subject||'')}" />
-    </div>
-    <div class="full">
-      <label>Book Name</label>
-      <input id="bookname-${s.rowIndex}" type="text" value="${escapeAttr(s.bookTitle||'')}" />
-    </div>
-    <div class="full">
-      <label>Drive Link</label>
-      <input id="link-${s.rowIndex}" type="url" value="${escapeAttr(s.bookLink||'')}" />
-    </div>
-    <div class="full">
-      <label>Tags</label>
-      <input id="tags-${s.rowIndex}" type="text" value="Book" />
-    </div>
-  </div>
-  <button class="btn-assign" id="submitbtn-${s.rowIndex}" onclick="submitAssign(${s.rowIndex})"><span id="submitbtn-text-${s.rowIndex}">${checkIcon()} Add to main site</span></button>
-  `;
-}
-
-function toggleGroup(rowIndex) {
-  const sem = parseInt(document.getElementById(`sem-${rowIndex}`).value);
-  const showGroup = sem === 1 || sem === 2;
-  const select = document.getElementById(`branch-${rowIndex}`);
-  select.innerHTML = `
-    ${showGroup ? `
-      <optgroup label="Sem 1/2 groups (creates multiple entries)">
-        <option value="group:circuit">Circuit, 4 branches (Elec, Civil, Mining, Mech)</option>
-        <option value="group:non-circuit">Non-Circuit, 3 branches (CSE, Mineral, Metallurgy)</option>
-      </optgroup>` : ''}
-    <optgroup label="Single branch">
-      ${BRANCHES.map(b=>`<option value="branch:${b.v}">${b.l}</option>`).join('')}
-    </optgroup>`;
-}
-
-async function submitAssign(rowIndex) {
-  const btn = document.getElementById(`submitbtn-${rowIndex}`);
-  const btnText = document.getElementById(`submitbtn-text-${rowIndex}`);
-  const sem = parseInt(document.getElementById(`sem-${rowIndex}`).value);
-  const subjectNumber = parseInt(document.getElementById(`subnum-${rowIndex}`).value);
-  const branchVal = document.getElementById(`branch-${rowIndex}`).value; // "group:x" or "branch:x"
-  const subjectName = document.getElementById(`subname-${rowIndex}`).value.trim();
-  const bookName = document.getElementById(`bookname-${rowIndex}`).value.trim();
-  const driveLink = document.getElementById(`link-${rowIndex}`).value.trim();
-  const tags = document.getElementById(`tags-${rowIndex}`).value.trim() || 'Book';
-
-  if (!subjectName || !bookName) {
-    showToast('Subject name and book name are required', 'error');
-    return;
-  }
-
-  const payload = {
-    token: SESSION.token,
-    sourceRow: rowIndex,
-    semester: sem,
-    subjectNumber, subjectName, bookName,
-    driveLink: driveLink || '#',
-    tags, status: 'active',
-  };
-  if (branchVal.startsWith('group:')) payload.group = branchVal.split(':')[1];
-  else payload.branch = branchVal.split(':')[1];
-
-  btn.disabled = true; btnText.innerHTML = '<span class="spinner dark" style="border-color:rgba(255,255,255,0.35); border-top-color:#fff;"></span> Saving';
-  try {
-    const res = await callApi('assignBook', payload);
-    showToast(`Added to ${res.branchesAssigned.length} branch(es): ${res.branchesAssigned.join(', ')}`, 'success');
-    if (res.driveWarning) showToast(res.driveWarning, 'error');
-    // Remove from BOTH lists — a row can appear in either or both.
-    SUBMISSIONS = SUBMISSIONS.filter(s => s.rowIndex !== rowIndex);
-    MY_SUBMISSIONS = MY_SUBMISSIONS.filter(s => s.rowIndex !== rowIndex);
-    updateTabCounts();
-    renderList();
-  } catch (e) {
-    showToast(e.message, 'error');
-    btn.disabled = false; btnText.innerHTML = `${checkIcon()} Add to main site`;
-  }
-}
-
-function checkIcon(){ return '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>'; }
-function linkIcon(){ return '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>'; }
-function warnIcon(){ return '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>'; }
-function warnIconBig(){ return '<svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>'; }
-function checkIconBig(){ return '<svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="8 12 11 15 16 9"/></svg>'; }
-
-function escapeHtml(str) {
-  return String(str).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-}
-function escapeAttr(str) { return escapeHtml(str); }
-
-function showToast(msg, type='info') {
-  const wrap = document.getElementById('toast-wrap');
-  const t = document.createElement('div');
-  t.className = `toast ${type}`;
-  const icon = type === 'success' ? checkIcon() : (type === 'error' ? warnIcon() : '');
-  t.innerHTML = `${icon}<span>${escapeHtml(msg)}</span>`;
-  wrap.appendChild(t);
-  setTimeout(() => t.remove(), 4000);
-}
-
-document.getElementById('login-pass').addEventListener('keydown', e => { if (e.key === 'Enter') doLogin(); });
-
-(function init() {
-  const raw = sessionStorage.getItem('bpn_intern_session');
-  if (raw) {
-    try { SESSION = JSON.parse(raw); enterApp(); } catch(e) { /* ignore, show login */ }
-  }
-})();
-</script>
 </body>
 </html>
